@@ -300,3 +300,40 @@ body {
     color: #dc3545;
     font-weight: bold;
 }
+
+/* ========================================
+   PILLS DE NAVEGACIÓN
+   ======================================== */
+.nav-pills .nav-link {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-white);
+    border: 1px solid var(--color-border-light);
+    transition: all var(--transition-fast);
+}
+
+.nav-pills .nav-link:hover {
+    background-color: var(--color-bg-light);
+    color: var(--color-primary);
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--color-primary);
+    color: var(--color-bg-white);
+    border-color: var(--color-primary);
+}
+
+/* ========================================
+   IMÁGENES DE PRODUCTO
+   ======================================== */
+.product-thumb {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    background: var(--color-bg-light);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs);
+    border: 1px solid var(--color-border-light);
+}
