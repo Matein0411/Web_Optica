@@ -144,7 +144,7 @@
                                 <button class="btn btn-light text-info shadow-sm" title="Actualizar Estado" data-bs-toggle="modal" data-bs-target="#modalEstado">
                                     <i class="fas fa-sync-alt"></i>
                                 </button>
-                                <button class="btn btn-light text-danger shadow-sm" title="Eliminar">
+                                <button class="btn btn-light text-danger shadow-sm" title="Anular">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
@@ -269,44 +269,6 @@
         </div>
     </div>
 
-    <!-- Modal Buscar Paciente -->
-    <div class="modal fade" id="modalBuscaPaciente" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Buscar Paciente</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="buscaPaciente" placeholder="Cédula o nombre...">
-                        <button class="btn btn-outline-secondary" type="button">Buscar</button>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-sm">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Cédula</th>
-                                    <th>Nombre</th>
-                                    <th>Teléfono</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>0985983071</td>
-                                    <td>Maria Chachalo</td>
-                                    <td>0985983071</td>
-                                    <td><button class="btn btn-sm btn-primary" data-bs-dismiss="modal">Seleccionar</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal Agregar Abono -->
     <div class="modal fade" id="modalAbono" tabindex="-1">
         <div class="modal-dialog">
@@ -409,7 +371,9 @@
                                     <td>$120.00</td>
                                 </tr>
                                 <tr>
-                                    <td>Lunas</td>
+                                    <td>Lunas
+                                        <small class="text-muted">idFicha: 1</small>
+                                    </td>
                                     <td>1</td>
                                     <td>$60.00</td>
                                     <td>$60.00</td>

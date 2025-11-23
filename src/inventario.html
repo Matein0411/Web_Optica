@@ -140,7 +140,7 @@
                                     <button class="btn btn-light text-primary shadow-sm" title="Editar" data-bs-toggle="modal" data-bs-target="#modalProducto">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-light text-danger shadow-sm" title="Eliminar">
+                                    <button class="btn btn-light text-danger shadow-sm" title="Desactivar">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -184,6 +184,11 @@
                         </div>
                         
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label for="imagenProducto" class="form-label">Imagen del Producto</label>
+                                <input class="form-control" type="file" id="imagenProducto" accept="image/*">
+                            </div>
+
                             <div class="col-md-6">
                                 <label for="codigoSKU" class="form-label required-field">Código SKU</label>
                                 <input type="text" class="form-control" id="codigoSKU" placeholder="Ej. RB-3025" required>
