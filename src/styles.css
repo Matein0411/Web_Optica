@@ -337,3 +337,20 @@ body {
     padding: var(--spacing-xs);
     border: 1px solid var(--color-border-light);
 }
+
+.tab-custom {
+    background-color: white;
+    color: #0a2342;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.tab-custom:hover {
+    background-color: #f8f9fa;
+}
+
+.tab-custom.active {
+    background-color: #0a2342 !important;
+    color: white !important;
+    border-color: #0a2342 !important;
+}
