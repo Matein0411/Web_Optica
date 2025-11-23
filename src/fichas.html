@@ -1,18 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes</title>
+    <title>Fichas Clínicas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- sidebar -->
-     <nav class="sidebar">
+    <nav class="sidebar">
         <div class="sidebar-header">
             <a href="#" class="brand-badge">
                 <img src="assets/logo.png" alt="logo" class="sidebar-logo-img">
@@ -32,7 +34,7 @@
             <a href="servicios.html" class="nav-link">
                 <i class="fa fa-concierge-bell"></i> Servicios
             </a>
-            <a href="ventas.html" class="nav-link"> 
+            <a href="ventas.html" class="nav-link">
                 <i class="fas fa-cash-register"></i> Ventas
             </a>
             <a href="fichas.html" class="nav-link active">
@@ -45,20 +47,433 @@
                 <i class="fa fa-sign-out-alt me-3"></i> Cerrar sesión
             </a>
         </div>
-     </nav>
+    </nav>
 
-     <!-- header -->
-      <header class="top-header">
-           <h4 class="mb-0 fw-bold text-dark">Dashboard</h4>
-           <div class="d-flex align-items-center gap-3">
-                <div class="text-end">
-                    <div class="fw-bold">Dra. Cumanda Delgado</div>
-                    <small class="text-muted">Administrador</small>
+    <!-- header -->
+    <header class="top-header">
+        <h4 class="mb-0 fw-bold text-dark">Dashboard</h4>
+        <div class="d-flex align-items-center gap-3">
+            <div class="text-end">
+                <div class="fw-bold">Dra. Cumanda Delgado</div>
+                <small class="text-muted">Administrador</small>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Cumanda+Delgado&background=0a2342&color=fff" class="rounded-circle" width="40" height="40" alt="Avatar">
+        </div>
+    </header>
+
+    <!-- main -->
+    <main class="main-content">
+        <h2 class="page-title">Fichas Clínicas</h2>
+
+        <!-- barra busqueda y boton agregar -->
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-6">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white ps-3">
+                             <i class="fas fa-search"></i>
+                         </span>
+                    <input type="text" class="form-control py-2" placeholder="Buscar Paciente">
                 </div>
-                  <img src="https://ui-avatars.com/api/?name=Cumanda+Delgado&background=0a2342&color=fff" class="rounded-circle" width="40" height="40" alt="Avatar">
-           </div>
-      </header>
+            </div>
 
-      <!-- main -->
+            <div class="col-md-6 text-md-end">
+                <button class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#modalFicha"><i class="fas fa-plus"></i> Nueva Ficha</button>
+            </div>
+        </div>
+
+        <!-- tabla fichas -->
+        <div class="card-table">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Paciente</th>
+                            <th>Motivo Consulta (MPC)</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-nowrap text-secondary">11 Ago 2025</td>
+                            <td>
+                                <div class="fw-bold">Maria Chachalo</div>
+                                <small class="text-muted">0985983071</small>
+                            </td>
+                            <td>Dificultad para leer de cerca</td>
+                            <td class="text-end">
+                                <button class="btn btn-light text-primary shadow-sm" title="Editar" data-bs-toggle="modal" data-bs-target="#modalFicha">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                <button class="btn btn-light text-danger shadow-sm" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                <button class="btn btn-light text-success shadow-sm" title="Generar PDF">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- modal -->
+    <div class="modal fade" id="modalFicha" tabindex="-1" aria-labelledby="modalFichaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFichaLabel">
+                        <i class="fas fa-file-medical me-2"></i> Nueva Ficha Clínica
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="formFicha">
+
+                        <!-- DATOS BÁSICOS -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="paciente" class="form-label required-field">Paciente</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="paciente" placeholder="Buscar paciente por nombre o CI...">
+                                    <button class="btn btn-secondary" type="button">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TABS -->
+                        <ul class="nav nav-tabs nav-fill mb-4" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active fw-bold tab-custom" id="preliminares-tab" data-bs-toggle="tab" data-bs-target="#preliminares" type="button" role="tab">
+                                    <i class="fas fa-stethoscope me-2"></i>Examen Preliminar
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-bold tab-custom" id="lunas-tab" data-bs-toggle="tab" data-bs-target="#lunas" type="button" role="tab">
+                                    <i class="fas fa-glasses me-2"></i>Refracción (Lunas)
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-bold tab-custom" id="contactos-tab" data-bs-toggle="tab" data-bs-target="#contactos" type="button" role="tab">
+                                    <i class="fas fa-eye me-2"></i>Lentes de Contacto
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="myTabContent">
+
+                            <!-- TAB 1: EXAMEN PRELIMINAR -->
+                            <div class="tab-pane fade show active" id="preliminares" role="tabpanel">
+
+                                <!-- SECCIÓN 1: ANAMNESIS -->
+                                <div class="section-title">
+                                    <i class="fas fa-clipboard-list me-2"></i>Anamnesis
+                                </div>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-8">
+                                        <label for="mpc" class="form-label required-field">Motivo de Consulta (MPC)</label>
+                                        <textarea class="form-control" id="mpc" rows="2" placeholder="Ej. Dificultad para ver de cerca, dolor de cabeza..."></textarea>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="ultimoControl" class="form-label">Último Control (en meses)</label>
+                                        <input type="text" class="form-control" id="ultimoControl" placeholder="Ej. 2">
+                                    </div>
+                                </div>
+
+                                <!-- SECCIÓN 2: RX ANTERIOR -->
+                                <div class="section-title">
+                                    <i class="fas fa-history me-2"></i>RX Anterior (Uso Actual)
+                                </div>
+
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-bordered table-sm text-center align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Ojo</th>
+                                                <th>Esfera</th>
+                                                <th>Cilindro</th>
+                                                <th>Eje</th>
+                                                <th>ADD</th>
+                                                <th>AV SC</th>
+                                                <th>AV CC</th>
+                                                <th>Prismas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bold bg-light">OD</td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="-0.00"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="-0.00"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="0°"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="+0.00"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="20/200"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="20/20"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold bg-light">OI</td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="-0.00"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="-0.00"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="0°"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="+0.00"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="20/150"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center" placeholder="20/20"></td>
+                                                <td><input type="text" class="form-control form-control-sm border-0 text-center"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- SECCIÓN 3: EXAMEN EXTERNO -->
+                                <div class="section-title">
+                                    <i class="fas fa-eye-dropper me-2"></i>Examen Externo
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Cover Test</label>
+                                        <input type="text" class="form-control" placeholder="Ej. Ortoforia">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">PPC (Punto Próximo de Convergencia)</label>
+                                        <input type="text" class="form-control" placeholder="Ej. 8cm">
+                                    </div>
+                                </div>
+
+                                <h6 class="fw-bold mb-3 text-muted" style="font-size: 0.9rem;">Hallazgos por Ojo</h6>
+
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card bg-light border">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold mb-3 text-primary-color">Ojo Derecho (OD)</h6>
+                                                <div class="mb-2">
+                                                    <label class="form-label small fw-bold text-muted">Oftalmoscopía</label>
+                                                    <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label small fw-bold text-muted">Retinoscopía</label>
+                                                    <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                                <div class="mb-0">
+                                                    <label class="form-label small fw-bold text-muted">Queratometría</label>
+                                                    <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="card bg-light border">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold mb-3 text-primary-color">Ojo Izquierdo (OI)</h6>
+                                                <div class="mb-2">
+                                                    <label class="form-label small fw-bold text-muted">Oftalmoscopía</label>
+                                                    <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label small fw-bold text-muted">Retinoscopía</label>
+                                                    <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                                <div class="mb-0">
+                                                    <label class="form-label small fw-bold text-muted">Queratometría</label>
+                                                    <input type="text" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: REFRACCIÓN (LUNAS) -->
+                            <div class="tab-pane fade" id="lunas" role="tabpanel">
+
+                                <!-- SECCIÓN 4: REFRACCIÓN FINAL (GAFAS) -->
+                                <div class="section-title">
+                                    <i class="fas fa-glasses me-2"></i>Refracción Final (Gafas)
+                                </div>
+
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-bordered text-center align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width: 50px;">RX</th>
+                                                <th>Esfera</th>
+                                                <th>Cilindro</th>
+                                                <th>Eje</th>
+                                                <th>ADD</th>
+                                                <th>AV</th>
+                                                <th>DNP</th>
+                                                <th>Prisma</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bold bg-light">OD</td>
+                                                <td><input type="number" step="0.25" class="form-control text-center fw-bold" placeholder="-2.00"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center" placeholder="-4.00"></td>
+                                                <td><input type="number" class="form-control text-center" placeholder="10"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center"></td>
+                                                <td><input type="text" class="form-control text-center" placeholder="20/25"></td>
+                                                <td><input type="text" class="form-control text-center" placeholder="30"></td>
+                                                <td><input type="text" class="form-control text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold bg-light">OI</td>
+                                                <td><input type="number" step="0.25" class="form-control text-center fw-bold" placeholder="-2.00"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center" placeholder="-4.50"></td>
+                                                <td><input type="number" class="form-control text-center" placeholder="160"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center"></td>
+                                                <td><input type="text" class="form-control text-center" placeholder="20/25"></td>
+                                                <td><input type="text" class="form-control text-center" placeholder="30"></td>
+                                                <td><input type="text" class="form-control text-center"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h6 class="fw-bold mb-3 text-muted" style="font-size: 0.9rem;">Características de los Lentes</h6>
+
+                                <div class="card bg-light border-0 p-3">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold small text-muted">Materiales</label>
+                                            <div class="row g-2">
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkCristal">
+                                                        <label class="form-check-label small" for="chkCristal">Cristal</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkCR39">
+                                                        <label class="form-check-label small" for="chkCR39">CR-39</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkPoly">
+                                                        <label class="form-check-label small" for="chkPoly">Policarbonato</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkProgresivo">
+                                                        <label class="form-check-label small" for="chkProgresivo">Progresivo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold small text-muted">Filtros y Tratamientos</label>
+                                            <div class="row g-2">
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkFiltroAzul">
+                                                        <label class="form-check-label small" for="chkFiltroAzul">Filtro Azul</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkTransition">
+                                                        <label class="form-check-label small" for="chkTransition">Transition</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkAntiReflejante">
+                                                        <label class="form-check-label small" for="chkAntiReflejante">Anti-Reflejante</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="chkFotocromatico">
+                                                        <label class="form-check-label small" for="chkFotocromatico">Fotocromático</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: LENTES DE CONTACTO -->
+                            <div class="tab-pane fade" id="contactos" role="tabpanel">
+
+                                <!-- SECCIÓN 5: LENTES DE CONTACTO (OPCIONAL) -->
+                                <div class="section-title">
+                                    <i class="fas fa-eye me-2"></i>Lentes de Contacto (Opcional)
+                                </div>
+
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-bordered text-center align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width: 50px;">RX</th>
+                                                <th>Esfera</th>
+                                                <th>Cilindro</th>
+                                                <th>Eje</th>
+                                                <th>ADD</th>
+                                                <th>AV</th>
+                                                <th>Tipo LC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bold bg-light">OD</td>
+                                                <td><input type="number" step="0.25" class="form-control text-center fw-bold"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center"></td>
+                                                <td><input type="number" class="form-control text-center"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center"></td>
+                                                <td><input type="text" class="form-control text-center"></td>
+                                                <td><input type="text" class="form-control text-center" placeholder="Ej. Tórico Blando"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold bg-light">OI</td>
+                                                <td><input type="number" step="0.25" class="form-control text-center fw-bold"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center"></td>
+                                                <td><input type="number" class="form-control text-center"></td>
+                                                <td><input type="number" step="0.25" class="form-control text-center"></td>
+                                                <td><input type="text" class="form-control text-center"></td>
+                                                <td><input type="text" class="form-control text-center" placeholder="Ej. Tórico Blando"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="observaciones" class="form-label fw-bold small text-muted">Observaciones Generales / Diagnóstico</label>
+                            <textarea class="form-control" id="observaciones" rows="2" placeholder="Ej. Se recomienda uso permanente. Revisión en 6 meses."></textarea>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-orange">
+                        <i class="fas fa-save me-2"></i>Guardar Ficha
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
