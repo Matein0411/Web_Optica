@@ -1,0 +1,393 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes - Óptica Latitud Visual</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="brand-badge">
+                <img src="${pageContext.request.contextPath}/assets/logo.png" alt="logo" class="sidebar-logo-img">
+                <div class="d-flex flex-column">
+                    <span class="brand-text-small">OPTICA</span>
+                    <span class="brand-text-main">LATITUD VISUAL</span>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu">
+            <a href="${pageContext.request.contextPath}/pacientes" class="nav-link active">
+                <i class="fa fa-users"></i> Pacientes
+            </a>
+            <a href="${pageContext.request.contextPath}/inventario" class="nav-link">
+                <i class="fa fa-boxes"></i> Inventario
+            </a>
+            <a href="${pageContext.request.contextPath}/servicios" class="nav-link">
+                <i class="fa fa-concierge-bell"></i> Servicios
+            </a>
+            <a href="${pageContext.request.contextPath}/ventas" class="nav-link"> 
+                <i class="fas fa-cash-register"></i> Ventas
+            </a>
+            <a href="${pageContext.request.contextPath}/fichas" class="nav-link">
+                <i class="fa fa-file-medical"></i> Fichas Clínicas
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="${pageContext.request.contextPath}/logout" class="logout-link">
+                <i class="fa fa-sign-out-alt me-3"></i> Cerrar sesión
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="top-header">
+        <h4 class="mb-0 fw-bold text-dark">Dashboard</h4>
+        <div class="d-flex align-items-center gap-3">
+            <div class="text-end">
+                <div class="fw-bold">Dra. Cumanda Delgado</div>
+                <small class="text-muted">Administrador</small>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Cumanda+Delgado&background=0a2342&color=fff" 
+                 class="rounded-circle" width="40" height="40" alt="Avatar">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h2 class="page-title">Pacientes</h2>
+
+        <!-- Barra de búsqueda y botón agregar -->
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-6">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white ps-3">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control py-2" 
+                           placeholder="Buscar por Cédula o Nombre">
+                </div>
+            </div>
+ 
+            <div class="col-md-6 text-md-end">
+                <button class="btn btn-orange" onclick="abrirModalNuevo()">
+                    <i class="fas fa-user-plus"></i> Nuevo Paciente
+                </button>
+            </div>                
+        </div>
+
+        <!-- Tabla de pacientes -->
+        <div class="card-table">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>Cédula</th>
+                            <th>Celular</th>
+                            <th>Correo</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+<tbody id="tablaPacientes">
+    <c:if test="${empty pacientes}">
+        <tr>
+            <td colspan="5" class="text-center text-muted py-4">
+                <i class="fas fa-search fa-2x mb-2"></i>
+                <p>No se encontraron pacientes registrados</p>
+            </td>
+        </tr>
+    </c:if>
+
+    <c:forEach items="${pacientes}" var="paciente">
+        <tr>
+            <td>
+                <div class="fw-bold">${paciente.nombreCompleto}</div>
+                <small class="text-muted">${paciente.edad} Años</small>
+            </td>
+            <td>
+                <div>${paciente.cedula}</div>
+            </td>
+            <td>
+                <div>${paciente.telefono != null ? paciente.telefono : '-'}</div>
+            </td>
+            <td>
+                <span class="text-muted">
+                    ${paciente.correoElectronico != null ? paciente.correoElectronico : '-'}
+                </span>
+            </td>
+            <td class="text-end">
+                <button class="btn btn-light text-primary shadow-sm" 
+                        title="Editar" onclick="editarPaciente(${paciente.id})">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-light text-danger shadow-sm" 
+                        title="Eliminar" onclick="confirmarEliminar(${paciente.id}, '${paciente.nombreCompleto}')">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    </c:forEach>
+</tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Paciente -->
+    <jsp:include page="FormularioPaciente.jsp" />
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const contextPath = '${pageContext.request.contextPath}';
+    
+    // Búsqueda en tiempo real
+    let searchTimeout;
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            listarPacientes(e.target.value);
+        }, 500);
+    });
+    
+    function listarPacientes(criterio = '') {
+        // Usamos accion=buscar para obtener JSON
+        const url = contextPath + '/pacientes?accion=buscar&criterio=' + encodeURIComponent(criterio);
+        
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Error en la red");
+                return response.json();
+            })
+            .then(pacientes => {
+                actualizarTabla(pacientes);
+            })
+            .catch(error => {
+                console.error('Error al listar:', error);
+            });
+    }
+    
+    function actualizarTabla(pacientes) {
+        const tbody = document.getElementById('tablaPacientes');
+        
+        if (pacientes.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">
+                        <i class="fas fa-search fa-2x mb-2"></i>
+                        <p>No se encontraron pacientes</p>
+                    </td>
+                </tr>`;
+            return;
+        }
+        
+        // Renderizado de filas
+        tbody.innerHTML = pacientes.map(p => `
+            <tr>
+                <td>
+                    <div class="fw-bold">\${p.nombre} \${p.apellido}</div>
+                    <small class="text-muted">\${calcularEdad(p.fechaNacimiento)} Años</small>
+                </td>
+                <td>
+                    <div>\${p.cedula}</div>
+                </td>
+                <td>
+                    <div>\${p.telefono ? p.telefono : '-'}</div>
+                </td>
+                <td>
+                    <span class="text-muted">
+                        \${p.correoElectronico ? p.correoElectronico : '-'}
+                    </span>
+                </td>
+                <td class="text-end">
+                    <button class="btn btn-light text-primary shadow-sm" 
+                            title="Editar" onclick="editarPaciente(\${p.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-light text-danger shadow-sm" 
+                            title="Eliminar" onclick="confirmarEliminar(\${p.id}, '\${p.nombre} \${p.apellido}')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function calcularEdad(fecha) {
+        if(!fecha) return 0;
+        const hoy = new Date();
+        const nacimiento = new Date(fecha);
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--;
+        }
+        return edad;
+    }
+    
+    function abrirModalNuevo() {
+        document.getElementById('formPaciente').reset();
+        document.getElementById('pacienteId').value = '';
+        document.getElementById('modalPacienteLabel').innerHTML = 
+            '<i class="fas fa-user-plus me-2"></i>Nuevo Paciente';
+        
+        const modal = new bootstrap.Modal(document.getElementById('modalPaciente'));
+        modal.show();
+    }
+    
+    function editarPaciente(id) {
+        if (!id) {
+            console.error("ID inválido para editar");
+            return;
+        }
+        
+        const url = contextPath + "/pacientes?accion=obtener&id=" + id;
+        
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Error al obtener paciente");
+                return response.json();
+            })
+            .then(paciente => {
+                document.getElementById('pacienteId').value = paciente.id;
+                document.getElementById('nombre').value = paciente.nombre;
+                document.getElementById('apellido').value = paciente.apellido;
+                document.getElementById('cedula').value = paciente.cedula;
+                document.getElementById('fechaNacimiento').value = paciente.fechaNacimiento;
+                // Manejo seguro de nulos para los campos opcionales
+                document.getElementById('celular').value = paciente.telefono || '';
+                document.getElementById('email').value = paciente.correoElectronico || '';
+                document.getElementById('direccion').value = paciente.direccion || '';
+                document.getElementById('ocupacion').value = paciente.ocupacion || '';
+                document.getElementById('antecedentesOculares').value = paciente.antecedentesOculares || '';
+                document.getElementById('antecedentesMedicos').value = paciente.antecedentesMedicos || '';
+                document.getElementById('antecedentesFamiliares').value = paciente.antecedentesFamiliares || '';
+                document.getElementById('antecedentesFarmacologicos').value = paciente.antecedentesFarmacologicos || '';
+                
+                document.getElementById('modalPacienteLabel').innerHTML = 
+                    '<i class="fas fa-user-edit me-2"></i>Editar Paciente';
+                
+                const modal = new bootstrap.Modal(document.getElementById('modalPaciente'));
+                modal.show();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'No se pudo cargar la información del paciente', 'error');
+            });
+    }
+    
+    function guardarPaciente() {
+        const form = document.getElementById('formPaciente');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        const formData = new FormData(form);
+        const id = document.getElementById('pacienteId').value;
+        formData.append('accion', id ? 'editar' : 'guardar');
+        if (id) {
+            formData.append('id', id);
+        }
+        
+        fetch(`${contextPath}/pacientes`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+             // Si el servidor devuelve error 404 o 500, lanzamos error para que no intente leer JSON
+             if(!response.ok) throw new Error("Error en la petición: " + response.status);
+             return response.json();
+        })
+        .then(data => {
+            if (data.success === 'true') {
+                // 1. Cerrar Modal
+                const modalElement = document.getElementById('modalPaciente');
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                modalInstance.hide();
+                
+                // 2. Alerta
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: data.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                
+                // 3. Recargar tabla (AJAX)
+                listarPacientes('');
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire('Error', 'Ocurrió un error al guardar. Ver consola.', 'error');
+        });
+    }
+    
+    function confirmarEliminar(id, nombre) {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: `¿Desea eliminar al paciente ${nombre}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                eliminarPaciente(id);
+            }
+        });
+    }
+    
+    function eliminarPaciente(id) {
+        const formData = new FormData();
+        formData.append('accion', 'eliminar');
+        formData.append('id', id);
+
+        fetch(contextPath + '/pacientes', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if(!response.ok) throw new Error("Error en la petición");
+            return response.json();
+        })
+        .then(data => {
+            if (data.success === 'true') {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Eliminado!',
+                    text: data.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                
+                // Recargar la tabla
+                listarPacientes('');
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire('Error', 'Ocurrió un error al eliminar', 'error');
+        });
+    }
+</script>
+</body>
+</html>

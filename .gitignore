@@ -1,1 +1,18 @@
+# Eclipse
 /.metadata/
+/Servers/
+/.settings/
+.classpath
+.project
+
+# Maven / build
+/target/
+/build/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+

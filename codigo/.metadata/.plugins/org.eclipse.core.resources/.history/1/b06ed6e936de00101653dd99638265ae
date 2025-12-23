@@ -1,0 +1,5 @@
+package com.lv.comun.dao;
+
+public class BaseDAO {
+
+}
