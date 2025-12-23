@@ -1,0 +1,9 @@
+/.metadata/
+
+/Servers/
+/.settings/
+/build/
+/target/
+.classpath
+.project
+/META-INF/
