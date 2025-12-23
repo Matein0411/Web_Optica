@@ -83,8 +83,8 @@ public class ControladorPacientes extends HttpServlet {
                 case "editar":
                     editar(request, response);
                     break;
-                case "eliminar":
-                    eliminar(request, response);
+                case "desactivar":
+                    desactivar(request, response);
                     break;
                 default:
                     enviarRespuestaError(response, "Acción no válida");
@@ -234,7 +234,7 @@ public class ControladorPacientes extends HttpServlet {
         response.getWriter().write(gson.toJson(respuesta));
     }
     
-    private void eliminar(HttpServletRequest request, HttpServletResponse response) 
+    private void desactivar(HttpServletRequest request, HttpServletResponse response) 
             throws Exception {
         
         Long id = Long.parseLong(request.getParameter("id"));

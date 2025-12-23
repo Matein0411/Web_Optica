@@ -130,7 +130,7 @@
 					                    <i class="fas fa-edit"></i>
 					                </button>
 					                <button class="btn btn-light text-danger shadow-sm" 
-					                        title="Eliminar" onclick="confirmarEliminar(${paciente.id}, '${paciente.nombreCompleto}')">
+					                        title="Desactivar" onclick="confirmarDesactivar(${paciente.id}, '${paciente.nombreCompleto}')">
 					                    <i class="fas fa-trash-alt"></i>
 					                </button>
 					            </td>
@@ -215,7 +215,7 @@
                         <i class="fas fa-edit"></i>
                     </button>
                     <button class="btn btn-light text-danger shadow-sm" 
-                            title="Eliminar" onclick="confirmarEliminar(\${p.id}, '\${p.nombre} \${p.apellido}')">
+                            title="Desactivar" onclick="confirmarDesactivar(\${p.id}, '\${p.nombre} \${p.apellido}')">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>
@@ -335,26 +335,26 @@
         });
     }
     
-    function confirmarEliminar(id, nombre) {
+    function confirmarDesactivar(id, nombre) {
         Swal.fire({
             title: '¿Está seguro?',
-            text: `¿Desea eliminar al paciente ${nombre}?`,
+            text: `¿Desea desactivar al paciente ${nombre}?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminar',
+            confirmButtonText: 'Sí, desactivar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                eliminarPaciente(id);
+                desactivarPaciente(id);
             }
         });
     }
     
-    function eliminarPaciente(id) {
+    function desactivarPaciente(id) {
         const formData = new FormData();
-        formData.append('accion', 'eliminar');
+        formData.append('accion', 'desactivar');
         formData.append('id', id);
 
         fetch(contextPath + '/pacientes', {
@@ -383,7 +383,7 @@
         })
         .catch(error => {
             console.error('Error:', error);
-            Swal.fire('Error', 'Ocurrió un error al eliminar', 'error');
+            Swal.fire('Error', 'Ocurrió un error al desactivar', 'error');
         });
     }
 </script>
