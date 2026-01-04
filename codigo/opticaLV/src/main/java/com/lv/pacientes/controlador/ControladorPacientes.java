@@ -99,7 +99,7 @@ public class ControladorPacientes extends HttpServlet {
             throws Exception {
         List<Paciente> pacientes = pacienteDAO.obtenerActivos();
         request.setAttribute("pacientes", pacientes);
-        request.getRequestDispatcher("/vista/ListaPacientes.jsp").forward(request, response);
+        request.getRequestDispatcher("/vista/pacientes/ListaPacientes.jsp").forward(request, response);
     }
     
     private void buscar(HttpServletRequest request, HttpServletResponse response) 

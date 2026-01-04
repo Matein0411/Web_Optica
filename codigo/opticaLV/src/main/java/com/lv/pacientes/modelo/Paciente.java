@@ -168,7 +168,6 @@ public class Paciente {
     }
     
     // Método helper para calcular edad
-    @Transient
     public int getEdad() {
         if (fechaNacimiento != null) {
             return Period.between(fechaNacimiento, LocalDate.now()).getYears();
@@ -177,7 +176,6 @@ public class Paciente {
     }
     
     // Método helper para nombre completo
-    @Transient
     public String getNombreCompleto() {
         return nombre + " " + apellido;
     }

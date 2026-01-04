@@ -19,5 +19,6 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="com.lv.pacientes.modelo.Paciente"/>
+        <mapping class="com.lv.fichas.modelo.FichaClinica"/>
     </session-factory>
 </hibernate-configuration>
