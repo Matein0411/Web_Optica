@@ -1,0 +1,8 @@
+com\lv\TestConexion.class
+com\lv\fichas\modelo\FichaClinica.class
+com\lv\pacientes\modelo\Paciente.class
+com\lv\fichas\controlador\ControladorFichas.class
+com\lv\fichas\dao\FichaClinicaDAO.class
+com\lv\pacientes\controlador\ControladorPacientes.class
+com\lv\pacientes\dao\PacienteDAO.class
+com\lv\comun\dao\BaseDAO.class

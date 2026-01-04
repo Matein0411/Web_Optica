@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Tomcat Optica" type="TomcatServerConfigurationType" factoryName="Tomcat Server">
+    <module name="lv" />
+    <option name="tomcatHome" value="C:\\tomcat10" />
+    <option name="catalinaBase" value="C:\\tomcat10" />
+    <option name="port" value="8080" />
+    <option name="adminPort" value="8005" />
+    <option name="jvmArgs" value="" />
+    <deployments>
+      <deployment enabled="true">
+        <artifact name="optica:war" />
+        <option name="context" value="/optica" />
+      </deployment>
+    </deployments>
+  </configuration>
+</component>
+
