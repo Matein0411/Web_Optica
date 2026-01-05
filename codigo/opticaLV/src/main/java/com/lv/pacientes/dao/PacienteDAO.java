@@ -37,6 +37,7 @@ public class PacienteDAO extends BaseDAO<Paciente> {
     /**
      * Busca pacientes por nombre, apellido o cédula (para el buscador)
      */
+    @Override
     public List<Paciente> buscar(String criterio) {
         return executeQuery(session -> {
             CriteriaBuilder cb = session.getCriteriaBuilder();

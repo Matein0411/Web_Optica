@@ -68,6 +68,7 @@ public abstract class BaseDAO<T> {
         }
     }
 
+    public abstract List<T> buscar(String criterio);
     /**
      * Buscar todas las entidades sin límite
      */

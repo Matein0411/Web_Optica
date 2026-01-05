@@ -30,6 +30,7 @@ public class FichaClinicaDAO extends BaseDAO<FichaClinica> {
         });
     }
 
+    @Override
     public List<FichaClinica> buscar(String criterio) {
         return executeQuery(session -> {
             CriteriaBuilder cb = session.getCriteriaBuilder();
