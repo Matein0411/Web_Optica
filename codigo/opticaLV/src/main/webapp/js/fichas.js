@@ -10,8 +10,8 @@ $(document).ready(function() {
     let searchTimeout;
     const searchInput = document.getElementById('searchInput');
 
-    if(searchInput){
-        searchInput.addEventListener('input', function (e) {
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 listarFichas(e.target.value);
@@ -51,19 +51,19 @@ function abrirModalNuevaFicha() {
     setVal('pacienteId', '');
 
     const lblCedula = document.getElementById('pacienteCedula');
-    if(lblCedula) lblCedula.innerText = '';
+    if (lblCedula) lblCedula.innerText = '';
 
     const modalTitle = document.getElementById('modalFichaLabel');
-    if(modalTitle) modalTitle.innerHTML = '<i class="fas fa-file-medical me-2"></i>Nueva Ficha Clínica';
+    if (modalTitle) modalTitle.innerHTML = '<i class="fas fa-file-medical me-2"></i>Nueva Ficha Clínica';
 
     const btnGuardar = document.getElementById('btnGuardarFicha');
-    if(btnGuardar) btnGuardar.innerHTML = '<i class="fas fa-save me-2"></i>Guardar Ficha';
+    if (btnGuardar) btnGuardar.innerHTML = '<i class="fas fa-save me-2"></i>Guardar Ficha';
 
     const modalEl = document.getElementById('modalFicha');
     const modal = new bootstrap.Modal(modalEl);
 
     // Inicializar Select2 cuando el modal se muestra
-    modalEl.addEventListener('shown.bs.modal', function () {
+    modalEl.addEventListener('shown.bs.modal', function() {
         inicializarSelect2();
     }, { once: true });
 
@@ -121,10 +121,10 @@ function editarFicha(id) {
             document.getElementById('formFicha').reset();
 
             const modalTitle = document.getElementById('modalFichaLabel');
-            if(modalTitle) modalTitle.innerHTML = '<i class="fas fa-edit me-2"></i>Editar Ficha Clínica';
+            if (modalTitle) modalTitle.innerHTML = '<i class="fas fa-edit me-2"></i>Editar Ficha Clínica';
 
             const btnGuardar = document.getElementById('btnGuardarFicha');
-            if(btnGuardar) btnGuardar.innerHTML = '<i class="fas fa-save me-2"></i>Guardar Cambios';
+            if (btnGuardar) btnGuardar.innerHTML = '<i class="fas fa-save me-2"></i>Guardar Cambios';
 
             setVal('fichaId', ficha.id);
 
@@ -145,8 +145,8 @@ function editarFicha(id) {
                     $('#comboPaciente').val(ficha.paciente.id);
                 }
 
-                const lbl = document.getElementById('pacienteCedula');
-                if(lbl) lbl.innerText = 'Cédula: ' + (ficha.paciente.cedula || 'N/A');
+                //const lbl = document.getElementById('pacienteCedula');
+                // if(lbl) lbl.innerText = 'Cédula: ' + (ficha.paciente.cedula || 'N/A');
             }
 
             // Cargar campos de texto
@@ -154,51 +154,80 @@ function editarFicha(id) {
             setVal('ultimoControlMeses', ficha.ultimoControlMeses);
 
             // RX Anterior
-            setVal('rxAntOdEsfera', ficha.rxAntOdEsfera); setVal('rxAntOdCilindro', ficha.rxAntOdCilindro);
-            setVal('rxAntOdEje', ficha.rxAntOdEje); setVal('rxAntOdAdd', ficha.rxAntOdAdd);
-            setVal('rxAntOdAvSc', ficha.rxAntOdAvSc); setVal('rxAntOdAvCc', ficha.rxAntOdAvCc);
+            setVal('rxAntOdEsfera', ficha.rxAntOdEsfera);
+            setVal('rxAntOdCilindro', ficha.rxAntOdCilindro);
+            setVal('rxAntOdEje', ficha.rxAntOdEje);
+            setVal('rxAntOdAdd', ficha.rxAntOdAdd);
+            setVal('rxAntOdAvSc', ficha.rxAntOdAvSc);
+            setVal('rxAntOdAvCc', ficha.rxAntOdAvCc);
             setVal('rxAntOdPrismas', ficha.rxAntOdPrismas);
 
-            setVal('rxAntOiEsfera', ficha.rxAntOiEsfera); setVal('rxAntOiCilindro', ficha.rxAntOiCilindro);
-            setVal('rxAntOiEje', ficha.rxAntOiEje); setVal('rxAntOiAdd', ficha.rxAntOiAdd);
-            setVal('rxAntOiAvSc', ficha.rxAntOiAvSc); setVal('rxAntOiAvCc', ficha.rxAntOiAvCc);
+            setVal('rxAntOiEsfera', ficha.rxAntOiEsfera);
+            setVal('rxAntOiCilindro', ficha.rxAntOiCilindro);
+            setVal('rxAntOiEje', ficha.rxAntOiEje);
+            setVal('rxAntOiAdd', ficha.rxAntOiAdd);
+            setVal('rxAntOiAvSc', ficha.rxAntOiAvSc);
+            setVal('rxAntOiAvCc', ficha.rxAntOiAvCc);
             setVal('rxAntOiPrismas', ficha.rxAntOiPrismas);
 
             // Preliminares
-            setVal('coverTest', ficha.coverTest); setVal('ppc', ficha.ppc);
-            setVal('oftalmoscopiaOd', ficha.oftalmoscopiaOd); setVal('retinoscopiaOd', ficha.retinoscopiaOd); setVal('queratometriaOd', ficha.queratometriaOd);
-            setVal('oftalmoscopiaOi', ficha.oftalmoscopiaOi); setVal('retinoscopiaOi', ficha.retinoscopiaOi); setVal('queratometriaOi', ficha.queratometriaOi);
+            setVal('coverTest', ficha.coverTest);
+            setVal('ppc', ficha.ppc);
+            setVal('oftalmoscopiaOd', ficha.oftalmoscopiaOd);
+            setVal('retinoscopiaOd', ficha.retinoscopiaOd);
+            setVal('queratometriaOd', ficha.queratometriaOd);
+            setVal('oftalmoscopiaOi', ficha.oftalmoscopiaOi);
+            setVal('retinoscopiaOi', ficha.retinoscopiaOi);
+            setVal('queratometriaOi', ficha.queratometriaOi);
 
             // RX Final
-            setVal('rxFinalOdEsfera', ficha.rxFinalOdEsfera); setVal('rxFinalOdCilindro', ficha.rxFinalOdCilindro);
-            setVal('rxFinalOdEje', ficha.rxFinalOdEje); setVal('rxFinalOdAdd', ficha.rxFinalOdAdd);
-            setVal('rxFinalOdAv', ficha.rxFinalOdAv); setVal('rxFinalOdDnp', ficha.rxFinalOdDnp);
+            setVal('rxFinalOdEsfera', ficha.rxFinalOdEsfera);
+            setVal('rxFinalOdCilindro', ficha.rxFinalOdCilindro);
+            setVal('rxFinalOdEje', ficha.rxFinalOdEje);
+            setVal('rxFinalOdAdd', ficha.rxFinalOdAdd);
+            setVal('rxFinalOdAv', ficha.rxFinalOdAv);
+            setVal('rxFinalOdDnp', ficha.rxFinalOdDnp);
             setVal('rxFinalOdPrisma', ficha.rxFinalOdPrisma);
 
-            setVal('rxFinalOiEsfera', ficha.rxFinalOiEsfera); setVal('rxFinalOiCilindro', ficha.rxFinalOiCilindro);
-            setVal('rxFinalOiEje', ficha.rxFinalOiEje); setVal('rxFinalOiAdd', ficha.rxFinalOiAdd);
-            setVal('rxFinalOiAv', ficha.rxFinalOiAv); setVal('rxFinalOiDnp', ficha.rxFinalOiDnp);
+            setVal('rxFinalOiEsfera', ficha.rxFinalOiEsfera);
+            setVal('rxFinalOiCilindro', ficha.rxFinalOiCilindro);
+            setVal('rxFinalOiEje', ficha.rxFinalOiEje);
+            setVal('rxFinalOiAdd', ficha.rxFinalOiAdd);
+            setVal('rxFinalOiAv', ficha.rxFinalOiAv);
+            setVal('rxFinalOiDnp', ficha.rxFinalOiDnp);
             setVal('rxFinalOiPrisma', ficha.rxFinalOiPrisma);
 
             // Checkboxes
-            setChk('chkCristal', ficha.materialCristal); setChk('chkCR39', ficha.materialCr39);
-            setChk('chkPoly', ficha.materialPolicarbonato); setChk('chkProgresivo', ficha.materialProgresivo);
-            setChk('chkFiltroAzul', ficha.filtroAzul); setChk('chkTransition', ficha.filtroTransition);
-            setChk('chkAntiReflejante', ficha.filtroAntiReflejante); setChk('chkFotocromatico', ficha.filtroFotocromatico);
+            setChk('chkCristal', ficha.materialCristal);
+            setChk('chkCR39', ficha.materialCr39);
+            setChk('chkPoly', ficha.materialPolicarbonato);
+            setChk('chkProgresivo', ficha.materialProgresivo);
+            setChk('chkFiltroAzul', ficha.filtroAzul);
+            setChk('chkTransition', ficha.filtroTransition);
+            setChk('chkAntiReflejante', ficha.filtroAntiReflejante);
+            setChk('chkFotocromatico', ficha.filtroFotocromatico);
 
             // Lentes Contacto
-            setVal('lcOdEsfera', ficha.lcOdEsfera); setVal('lcOdCilindro', ficha.lcOdCilindro); setVal('lcOdEje', ficha.lcOdEje);
-            setVal('lcOdAdd', ficha.lcOdAdd); setVal('lcOdAv', ficha.lcOdAv); setVal('lcOdTipo', ficha.lcOdTipo);
+            setVal('lcOdEsfera', ficha.lcOdEsfera);
+            setVal('lcOdCilindro', ficha.lcOdCilindro);
+            setVal('lcOdEje', ficha.lcOdEje);
+            setVal('lcOdAdd', ficha.lcOdAdd);
+            setVal('lcOdAv', ficha.lcOdAv);
+            setVal('lcOdTipo', ficha.lcOdTipo);
 
-            setVal('lcOiEsfera', ficha.lcOiEsfera); setVal('lcOiCilindro', ficha.lcOiCilindro); setVal('lcOiEje', ficha.lcOiEje);
-            setVal('lcOiAdd', ficha.lcOiAdd); setVal('lcOiAv', ficha.lcOiAv); setVal('lcOiTipo', ficha.lcOiTipo);
+            setVal('lcOiEsfera', ficha.lcOiEsfera);
+            setVal('lcOiCilindro', ficha.lcOiCilindro);
+            setVal('lcOiEje', ficha.lcOiEje);
+            setVal('lcOiAdd', ficha.lcOiAdd);
+            setVal('lcOiAv', ficha.lcOiAv);
+            setVal('lcOiTipo', ficha.lcOiTipo);
 
             setVal('observaciones', ficha.observaciones);
 
             const modalEl = document.getElementById('modalFicha');
             const modal = new bootstrap.Modal(modalEl);
 
-            modalEl.addEventListener('shown.bs.modal', function () {
+            modalEl.addEventListener('shown.bs.modal', function() {
                 inicializarSelect2();
             }, { once: true });
 
@@ -268,19 +297,19 @@ function inicializarSelect2() {
             url: contextPath + '/pacientes',
             dataType: 'json',
             delay: 250,
-            data: function (params) {
+            data: function(params) {
                 return {
                     accion: 'buscar',
                     criterio: params.term || ''
                 };
             },
-            processResults: function (data) {
+            processResults: function(data) {
                 return {
-                    results: data.map(function (p) {
+                    results: data.map(function(p) {
                         return {
                             id: p.id,
                             text: p.nombre + ' ' + p.apellido + ' - C.I: ' + (p.cedula || 'N/A'),
-                            cedula: p.cedula
+
                         };
                     })
                 };
@@ -290,27 +319,27 @@ function inicializarSelect2() {
     });
 
     // Actualizar hidden input al seleccionar
-    $select.on('change', function (e) {
+    $select.on('change', function(e) {
         const selectedValue = $(this).val();
         document.getElementById('pacienteId').value = selectedValue || '';
 
         // Actualizar label de cédula
-        if (selectedValue) {
-            // Verificar que select2 tenga datos (puede fallar si es seteo manual sin trigger data)
-            const dataArr = $(this).select2('data');
-            if (dataArr && dataArr.length > 0) {
-                const selectedData = dataArr[0];
-                if (selectedData && selectedData.cedula) {
-                    document.getElementById('pacienteCedula').innerText = 'Cédula: ' + selectedData.cedula;
-                }
-            }
-        } else {
-            document.getElementById('pacienteCedula').innerText = '';
-        }
+        // if (selectedValue) {
+        //     // Verificar que select2 tenga datos (puede fallar si es seteo manual sin trigger data)
+        //     const dataArr = $(this).select2('data');
+        //     if (dataArr && dataArr.length > 0) {
+        //         const selectedData = dataArr[0];
+        //         if (selectedData && selectedData.cedula) {
+        //             document.getElementById('pacienteCedula').innerText = 'Cédula: ' + selectedData.cedula;
+        //         }
+        //     }
+        // } else {
+        //     document.getElementById('pacienteCedula').innerText = '';
+        // }
     });
 
     // Limpiar hidden input al borrar selección
-    $select.on('select2:clear', function (e) {
+    $select.on('select2:clear', function(e) {
         document.getElementById('pacienteId').value = '';
         document.getElementById('pacienteCedula').innerText = '';
     });
@@ -362,6 +391,7 @@ function setVal(id, value) {
     const el = document.getElementById(id);
     if (el) el.value = (value != null) ? value : '';
 }
+
 function setChk(id, value) {
     const el = document.getElementById(id);
     if (el) el.checked = (value === true);
