@@ -84,7 +84,7 @@ public class ControladorFichas extends HttpServlet {
     private void listar(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<FichaClinica> fichas = fichaDAO.obtenerActivas();
         request.setAttribute("fichas", fichas);
-        request.getRequestDispatcher("/vista/fichas/ListaServicios.jsp").forward(request, response);
+        request.getRequestDispatcher("/vista/fichas/ListaFichas.jsp").forward(request, response);
     }
 
     private void buscar(HttpServletRequest request, HttpServletResponse response) throws Exception {
