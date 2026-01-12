@@ -21,5 +21,6 @@
         <mapping class="com.lv.pacientes.modelo.Paciente"/>
         <mapping class="com.lv.fichas.modelo.FichaClinica"/>
         <mapping class="com.lv.servicios.modelo.Servicio"/>
+        <mapping class="com.lv.inventario.modelo.Producto"/>
     </session-factory>
 </hibernate-configuration>
